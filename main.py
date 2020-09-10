@@ -1,0 +1,53 @@
+import sys
+import os
+import logging
+import time
+libdir = os.path.dirname(os.path.realpath(__file__))
+
+sys.path.append(libdir)
+from waveshare_epd import epd2in13_V2
+
+from image import getImage
+
+from PIL import Image
+
+logging.basicConfig(level=logging.DEBUG)
+
+try:
+    logging.info("epd2in13_V2 Hello World")
+    
+    epd = epd2in13_V2.EPD()
+    logging.info("init and Clear")
+    epd.init(epd.FULL_UPDATE)
+    epd.Clear(0xFF)
+    
+    partImage = Image.new('1', (epd.height, epd.width), 255)
+    epd.displayPartBaseImage(epd.getbuffer(partImage))
+    epd.init(epd.PART_UPDATE)
+    
+    while True:
+            
+      try:
+          logging.info("1.Drawing on the image...")
+          image = getImage()
+
+          epd.displayPartial(epd.getbuffer(image))
+
+        
+          # logging.info("Goto Sleep...")
+          # epd.sleep()
+      except:
+        pass
+      finally:
+        time.sleep(40)
+
+    
+            
+except IOError as e:
+    logging.info(e)
+    
+except KeyboardInterrupt:    
+    logging.info("ctrl + c:")
+
+    epd2in13_V2.epdconfig.module_exit()
+    exit()
