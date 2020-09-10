@@ -1,6 +1,8 @@
 # PiZero-EpaperWikicrawler
 Displays crawled wikipedia pages on the waveshare 2.13" eInk pHAT
 
+![Image of the project](https://github.com/harry48225/PiZero-EpaperWikicrawler/blob/master/example.jpg)
+
 # Installation and usage
 Create the venv (don't use sudo)
 
